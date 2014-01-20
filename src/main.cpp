@@ -5,11 +5,11 @@
  *      Author: aarontharris
  */
 
-#include "SDLGameApp.h"
+#include "ZGame.h"
 
 int main( int argc, char *argv[] ) {
 
-	GameApp *game = new SDLGameApp();
+	GameApp *game = new ZGame();
 	game->run( 800, 600 );
 
 }

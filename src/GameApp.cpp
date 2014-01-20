@@ -1,8 +1,6 @@
 #include "GameApp.h"
 
-#include <SDL.h>
-#include <glut.h>
-#include <gl3ext.h>
+#include <stdio.h>
 
 GameApp::GameApp() {
 }
@@ -12,7 +10,7 @@ GameApp::~GameApp() {
 
 void GameApp::run(int width, int height) {
 	float time = getTime();
-	printf( "Window: %s @ %.2f\n", getWindowTitle(), time );
+	printf( "GameApp: %s @ %.2f\n", getWindowTitle(), time );
 }
 
 char* GameApp::getWindowTitle() {
@@ -20,7 +18,7 @@ char* GameApp::getWindowTitle() {
 }
 
 float GameApp::getTime() {
-	return (float) SDL_GetTicks() / 1000.0f;
+	return -1.0f;
 }
 
 void GameApp::init() {

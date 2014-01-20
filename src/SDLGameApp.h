@@ -10,11 +10,16 @@
 
 #include "GameApp.h"
 
+#include <SDL.h>
+#include <glut.h>
+#include <gl3ext.h>
+
 class SDLGameApp : public GameApp {
 
 public:
 	SDLGameApp();
 	virtual void run( int width, int height );
+	virtual char* getWindowTitle();
 	virtual float getTime();
 
 };
