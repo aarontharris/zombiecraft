@@ -1,7 +1,7 @@
 - Step 1, You'll need to install the xcode command line tools
 - For < Mavericks you can open XCode->Preferences->Downloads and install Command Line Tools
 - For >= Mavericks you can run this:
-xcode-select --install
+$> xcode-select --install
 
 - Step 2, You'll need SDL 2.0.1 at the time of writing
 http://www.libsdl.org/release/SDL2-2.0.1.dmg
