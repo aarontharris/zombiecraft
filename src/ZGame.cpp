@@ -130,33 +130,13 @@ int wCubes = 10;
 int hCubes = 10;
 int dCubes = 10;
 int cubeSize = .5;
+Vector3f cubeOrigin = { 0,0,0 };
 
 void drawCubes() {
-//	fprintf( stdout, "drawCubes\n");
 	glPushMatrix();
 
-//	float size = 9;
-
-//	for ( int x = 0; x < 3000; x++ ) {
+	glTranslatef( cubeOrigin.x, cubeOrigin.y, cubeOrigin.z );
 	glutWireCube(10);
-//	}
-//	glutWireCube(10);
-
-//	float xOrg = -1 * wCubes * cubeSize;
-//
-//	Vector3f origin;
-//	origin.x = 0;
-//	origin.y = 0;
-//	origin.z = 0;
-//
-//
-//	for ( int xIdx = 0; xIdx < wCubes; xIdx++ ) {
-//		glPushMatrix();
-//		float xPos = origin.x + xIdx * cubeSize;
-//		glTranslatef(xPos, origin.y, origin.z);
-//		glutWireCube(cubeSize);
-//		glPopMatrix();
-//	}
 
 	glPopMatrix();
 }
