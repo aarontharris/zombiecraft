@@ -10,7 +10,7 @@
 int main( int argc, char *argv[] ) {
 
 	GameApp *game = new ZGame();
-	game->run( 800, 600 );
+	game->run( 1440, 900 );
 
 }
 

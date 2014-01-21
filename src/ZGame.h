@@ -8,9 +8,23 @@
 #ifndef ZGAME_H_
 #define ZGAME_H_
 
-#include "SDLGameApp.h"
+#define USE_SDL true
+#define USE_GLFW false
 
+#if USE_SDL == true
+#include "SDLGameApp.h"
+#endif
+#if USE_GLFW == true
+#include "GLFWGameApp.h"
+#endif
+
+#if USE_SDL == true
 class ZGame : public SDLGameApp {
+#endif
+
+#if USE_GLFW == true
+class ZGame : public GLFWGameApp {
+#endif
 
 	virtual char* getWindowTitle();
 	virtual void init();
