@@ -22,6 +22,8 @@ public:
 	GLFWGameApp( const char* windowTitle, int screenWidth, int screenHeight );
 	virtual void run();
 	virtual float getTime();
+	virtual int getScreenWidth();
+	virtual int getScreenHeight();
 
 };
 

@@ -31,8 +31,16 @@ void GLFWGameApp::run() {
 		exit(EXIT_FAILURE);
 	}
 
-	printf("GLFWGameApp::run %d x %d\n", getScreenWidth(), getScreenHeight());
-	window = glfwCreateWindow(getScreenWidth(), getScreenHeight(), getWindowTitle(), NULL, NULL);
+	// FIXME: GLFW weird screensize hack
+	// for some reason the viewport was only 1/2 of the window for GLFW
+	// I think it may have something to do with the retina screen automagic scaling?
+	// We set the getScreenWidth and getScreenHeight methods to return 2x for the later viewport
+	// and we 1/2 it here for the window.
+	int width = getScreenWidth() / 2;
+	int height = getScreenHeight() / 2;
+
+	printf("GLFWGameApp::run %d x %d\n", width, height );
+	window = glfwCreateWindow(width, height, getWindowTitle(), NULL, NULL);
 	if (!window) {
 		glfwTerminate();
 		exit(EXIT_FAILURE);
@@ -52,9 +60,7 @@ void GLFWGameApp::run() {
 		float frameTime = thisFrameStart - lastFrameStart;
 
 		update(frameTime);
-		int width = 1440;
-		int height = 900;
-		glfwGetFramebufferSize(window, &width, &height);
+//		glfwGetFramebufferSize(window, &width, &height);
 		render(frameTime);
 
 		glfwSwapBuffers(window);
@@ -70,4 +76,12 @@ void GLFWGameApp::run() {
 
 float GLFWGameApp::getTime() {
 	return glfwGetTime();
+}
+
+int GLFWGameApp::getScreenWidth() {
+	return 2 * GameApp::getScreenWidth();
+}
+
+int GLFWGameApp::getScreenHeight() {
+	return 2 * GameApp::getScreenHeight();
 }
