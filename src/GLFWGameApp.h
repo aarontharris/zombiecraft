@@ -19,8 +19,9 @@
 class GLFWGameApp: public GameApp {
 
 public:
-	GLFWGameApp();
-	virtual ~GLFWGameApp();
+	GLFWGameApp( const char* windowTitle, int screenWidth, int screenHeight );
+	virtual void run();
+	virtual float getTime();
 
 };
 

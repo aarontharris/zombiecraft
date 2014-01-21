@@ -18,8 +18,9 @@ Vector3f ncamPos; // camera normal
 Vector3f potPos; // pot position
 Vector3f potRot; // pot rotation
 
-char* ZGame::getWindowTitle() {
-	return "Zombie Game";
+// GAME_APP is a #define that points to the impl for SDL,GLFW, etc
+ZGame::ZGame(const char* windowTitle, int screenWidth, int screenHeight) :
+		GAME_APP_ABSTRACTION_LAYER(windowTitle, screenWidth, screenHeight) {
 }
 
 void ZGame::init() {
@@ -69,6 +70,7 @@ void ZGame::render(float frameTime) {
 
 	// Setup our camera
 	{
+		printf("ZGame::render %d x %d\n", width, height);
 		glViewport(0, 0, width, height);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();

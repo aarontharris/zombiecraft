@@ -9,8 +9,8 @@
 
 int main( int argc, char *argv[] ) {
 
-	GameApp *game = new ZGame();
-	game->run( 1440, 900 );
+	GameApp *game = new ZGame( "Blah", 1440, 900 );
+	game->run();
 
 }
 

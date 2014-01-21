@@ -17,9 +17,8 @@
 class SDLGameApp : public GameApp {
 
 public:
-	SDLGameApp();
-	virtual void run( int width, int height );
-	virtual char* getWindowTitle();
+	SDLGameApp( const char* windowTitle, int screenWidth, int screenHeight );
+	virtual void run();
 	virtual float getTime();
 
 };

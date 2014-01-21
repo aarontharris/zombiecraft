@@ -12,20 +12,21 @@ class GameApp {
 private:
 	int screenWidth;
 	int screenHeight;
+	const char* windowTitle;
 
 public:
-	GameApp();
+	GameApp( const char* windowTitle, int screenWidth, int screenHeight );
 	virtual ~GameApp();
 
-	virtual void run( int width, int height );
+	virtual void run();
 
 protected:
-	virtual char* getWindowTitle();
 	virtual float getTime();
 	virtual void init();
 	virtual void update( float frameTime );
 	virtual void render( float frameTime );
 
+	const char* getWindowTitle();
 	int getScreenWidth();
 	int getScreenHeight();
 

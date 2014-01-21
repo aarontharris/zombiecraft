@@ -26,12 +26,12 @@ void checkSDLError(int line = -1) {
 #endif
 }
 
-SDLGameApp::SDLGameApp() :
-		GameApp() {
+SDLGameApp::SDLGameApp(const char* windowTitle, int screenWidth, int screenHeight) :
+		GameApp(windowTitle, screenWidth, screenHeight) {
 }
 
-void SDLGameApp::run(int width, int height) {
-	GameApp::run(width, height);
+void SDLGameApp::run() {
+	GameApp::run();
 	printf("SDLGameApp: Hello from SDLGameApp %s\n", getWindowTitle());
 
 	SDL_Window *mainwindow; /* Our window handle */
@@ -52,7 +52,7 @@ void SDLGameApp::run(int width, int height) {
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
 	/* Create our window centered at 512x512 resolution */
-	mainwindow = SDL_CreateWindow(getWindowTitle(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height,
+	mainwindow = SDL_CreateWindow(getWindowTitle(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, getScreenWidth(), getScreenHeight(),
 			SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 	if (!mainwindow) /* Die if creation failed */
 		sdldie("Unable to create window");
@@ -112,10 +112,6 @@ void SDLGameApp::run(int width, int height) {
 	SDL_GL_DeleteContext(maincontext);
 	SDL_DestroyWindow(mainwindow);
 	SDL_Quit();
-}
-
-char* SDLGameApp::getWindowTitle() {
-	return "SDLGame Title";
 }
 
 float SDLGameApp::getTime() {
