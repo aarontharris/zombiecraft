@@ -6,6 +6,7 @@ $> xcode-select --install
 ```
 
 Step 2, You'll need SDL 2.0.1 at the time of writing
+
 [http://www.libsdl.org/release/SDL2-2.0.1.dmg](http://www.libsdl.org/release/SDL2-2.0.1.dmg)
 
 - Step 3, On Mac GLUT.framework isn't compatible with Eclipse as is
