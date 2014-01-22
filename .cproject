@@ -31,7 +31,7 @@
 								<option id="macosx.cpp.link.option.paths.2057611161" name="Library search path (-L)" superClass="macosx.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="/System/Library/Frameworks/GLUT.framework"/>
 									<listOptionValue builtIn="false" value="/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries"/>
-									<listOptionValue builtIn="false" value="/Library/Frameworks/SDL2.framework"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/zombiecraft/Frameworks/SDL2.framework/Versions/A}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/zombiecraft/lib}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.macosx.cpp.linker.input.1059577320" superClass="cdt.managedbuild.tool.macosx.cpp.linker.input">
@@ -47,11 +47,14 @@
 								<option id="gnu.cpp.compilermacosx.exe.debug.option.optimization.level.1560839521" name="Optimization Level" superClass="gnu.cpp.compilermacosx.exe.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.macosx.exe.debug.option.debugging.level.1838761235" name="Debug Level" superClass="gnu.cpp.compiler.macosx.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1593486948" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/Library/Frameworks/SDL2.framework/Versions/A/Headers"/>
 									<listOptionValue builtIn="false" value="/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers"/>
 									<listOptionValue builtIn="false" value="/System/Library/Frameworks/GLUT.framework/Versions/A/Headers"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/zombiecraft/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/zombiecraft/Frameworks/SDL2.framework/Versions/A/Headers}&quot;"/>
 								</option>
+								<option id="gnu.cpp.compiler.option.warnings.allwarn.1033176708" name="All warnings (-Wall)" superClass="gnu.cpp.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.other.other.2040393110" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.warnings.nowarn.1410456885" superClass="gnu.cpp.compiler.option.warnings.nowarn" value="true" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.371635063" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.macosx.exe.debug.118627278" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.macosx.exe.debug">
@@ -131,5 +134,12 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
-	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/zombiecraft"/>
+		</configuration>
+		<configuration configurationName="Debug">
+			<resource resourceType="PROJECT" workspacePath="/zombiecraft"/>
+		</configuration>
+	</storageModule>
 </cproject>
