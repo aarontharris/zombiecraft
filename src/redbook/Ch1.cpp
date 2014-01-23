@@ -15,7 +15,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+static Ch1* self;
 Ch1::Ch1() {
+	self = this; // for C Func mapping
 }
 
 Ch1::~Ch1() {
@@ -29,7 +31,7 @@ void init() {
 	glShadeModel( GL_FLAT);
 }
 
-void display() {
+void Ch1::display() {
 	printf("display\n");
 	glClear( GL_COLOR_BUFFER_BIT);
 	glPushMatrix();
@@ -59,7 +61,7 @@ void reshape(int w, int h) {
 	glViewport(0, 0, (GLsizei) w, (GLsizei) h);
 	glMatrixMode( GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(-50.0, 50.0, -50.0, 50.0 ); // , 1.0, 1.0);
+	gluOrtho2D(-50.0, 50.0, -50.0, 50.0); // , 1.0, 1.0);
 	glMatrixMode( GL_MODELVIEW);
 	glLoadIdentity();
 }
@@ -99,6 +101,11 @@ void mouse(int button, int state, int x, int y) {
 	}
 }
 
+/* glutDisplayFunc requires a static function, so we redirect to our display member function */
+static void Ch1__display() {
+	self->display();
+}
+
 void Ch1::run() {
 	printf("run\n");
 	int argc = 0;
@@ -110,7 +117,7 @@ void Ch1::run() {
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Our GLUT Window");
 	init();
-	glutDisplayFunc(display);
+	glutDisplayFunc(Ch1__display);
 	glutReshapeFunc(reshape);
 	glutMouseFunc(mouse);
 	glutKeyboardFunc(keyboard);

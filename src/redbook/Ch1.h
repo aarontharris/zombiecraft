@@ -13,6 +13,7 @@ public:
 	Ch1();
 	virtual ~Ch1();
 	void run();
+	void display();
 };
 
 #endif /* CH1_H_ */
