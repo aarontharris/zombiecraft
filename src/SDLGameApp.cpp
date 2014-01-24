@@ -64,7 +64,7 @@ void SDLGameApp::run() {
 	checkSDLError(__LINE__);
 
 	/* This makes our buffer swap syncronized with the monitor's vertical refresh */
-	SDL_GL_SetSwapInterval(1);
+	SDL_GL_SetSwapInterval(0);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -74,13 +74,17 @@ void SDLGameApp::run() {
 
 	bool running = true;
 	SDL_Event event;
+	int frameNumber = 0;
 
 	init();
 
+	float gameStartTime = getTime();
 	float lastFrameStart = getTime();
 	while (running) {
+		frameNumber++;
 		float thisFrameStart = getTime();
 		float frameTime = thisFrameStart - lastFrameStart;
+		float totalTime = thisFrameStart - gameStartTime;
 
 		while (SDL_PollEvent(&event) != 0) {
 			switch (event.type) {
@@ -95,7 +99,8 @@ void SDLGameApp::run() {
 		//		frameTime = 0.025;
 
 		float fps = 1 / frameTime;
-		fprintf( stdout, "FPS: %f, FrameTime: %f\n", fps, frameTime);
+		float afps = (float)frameNumber / totalTime;
+		fprintf( stdout, "FPS: %f, AFPS: %f, FrameTime: %f\n", fps, afps, frameTime);
 
 		update(frameTime);
 		render(frameTime);
