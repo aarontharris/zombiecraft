@@ -13,6 +13,10 @@ Ch2::Ch2(const char* windowTitle, int screenWidth, int screenHeight) :
 }
 
 void Ch2::init() {
+	glEnable( GL_CULL_FACE );
+	glFrontFace( GL_CCW );
+	glEnable( GL_DEPTH_TEST );
+
 	camPos.x = 0;
 	camPos.y = 0;
 	camPos.z = 15; // -z extends into the monitor, +z towards the player
@@ -134,7 +138,6 @@ void Ch2::update(float frameTime) {
 void Ch2::render(float frameTime) {
 	int width = getScreenWidth();
 	int height = getScreenHeight();
-	glClear( GL_COLOR_BUFFER_BIT);
 
 	float ratio;
 	ratio = width / (float) height;
@@ -146,7 +149,7 @@ void Ch2::render(float frameTime) {
 		glLoadIdentity();
 		gluPerspective(50.0f, ratio, 0.1f, 100.0f);
 		glMatrixMode(GL_MODELVIEW);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 	}
 
 	// the camera's matrix
@@ -166,8 +169,8 @@ void Ch2::render(float frameTime) {
 
 		// Draw the world in the same root matrix to adopt camera rotation, etc
 		{
-//			drawCubes();
-			drawCubesBetter();
+			drawCubes();
+//			drawCubesBetter();
 			drawTeapot();
 		}
 	}
