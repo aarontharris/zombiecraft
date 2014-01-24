@@ -1,0 +1,16 @@
+# See Ch4.cpp for examples or read Redbook 2.1 p186.
+
+# Before rendering:
+	glEnable( GL_CULL_FACE );
+	glFrontFace( GL_CCW ); // Default but being explicit
+	glEnable( GL_DEPTH_TEST );
+	
+# At the beginning of each frame:
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+	
+# Why?
+- CULL_FACE removes inner faces.  For example, a cube has 6 sides, without CULL_FACE
+  you'd be rendering 6 outer faces and 6 inner faces (12 total) but the 6 inner are
+  wasted if you can't see the inside.
+  
+- DEPTH_TEST and DEPTH_BUFFER_BIT remove objects hidden by other objects to save work

@@ -13,6 +13,10 @@ Ch4::Ch4(const char* windowTitle, int screenWidth, int screenHeight) :
 }
 
 void Ch4::init() {
+	glEnable( GL_CULL_FACE );
+	glFrontFace( GL_CCW ); // Default but being explicit
+	glEnable( GL_DEPTH_TEST );
+
 	camPos.x = 0;
 	camPos.y = 0;
 	camPos.z = 15; // -z extends into the monitor, +z towards the player
@@ -41,6 +45,7 @@ void Ch4::init() {
 void Ch4::update(float frameTime) {
 	potPos.y += frameTime;
 	potRot.z += frameTime * 30; // 30 degrees per second
+	potRot.x += frameTime * 90; // 30 degrees per second
 	camRot.z += frameTime * 30;
 
 	tcamPos.x = potPos.x;
@@ -62,7 +67,7 @@ void Ch4::render(float frameTime) {
 		glLoadIdentity();
 		gluPerspective(50.0f, ratio, 0.1f, 100.0f);
 		glMatrixMode(GL_MODELVIEW);
-		glClear( GL_COLOR_BUFFER_BIT);
+		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 	}
 
 	// the camera's matrix
@@ -82,12 +87,70 @@ void Ch4::render(float frameTime) {
 
 		// Draw the world in the same root matrix to adopt camera rotation, etc
 		{
-			drawCubes();
+			for ( int i = 0; i < 10000; i++ ) {
+				drawCubes();
+			}
 		}
 	}
 	glPopMatrix();
 }
 
 void Ch4::drawCubes() {
-	glutSolidCube(5);
+	glColor3f(1, 1, 1);
+	glutWireCube(10);
+
+	glPushMatrix();
+	{
+		glTranslatef( potPos.x, potPos.y, potPos.z );
+		glRotatef( potRot.x, 1, 0, 0 );
+		glRotatef( potRot.y, 0, 1, 0 );
+		glRotatef( potRot.z, 0, 0, 1 );
+		float r = 0.5f;
+		glBegin( GL_QUADS);
+
+		// x
+		glColor3f(1, 0, 0);
+		glVertex3f(-r, -r, -r); // 1
+		glVertex3f(-r,  r, -r); // 4
+		glVertex3f( r,  r, -r); // 3
+		glVertex3f( r, -r, -r); // 2
+
+		// x - flipped z
+		glColor3f(0, 0, 1);
+		glVertex3f(-r, -r,  r); // 1 !z
+		glVertex3f( r, -r,  r); // 2 !z
+		glVertex3f( r,  r,  r); // 3 !z
+		glVertex3f(-r,  r,  r); // 4 !z
+
+		// z (x coords shifted left)
+		glColor3f( 0, 1, 0 );
+		glVertex3f(-r, -r, -r); // 1
+		glVertex3f( r, -r, -r); // 4
+		glVertex3f( r, -r,  r); // 3
+		glVertex3f(-r, -r,  r); // 2
+
+		// z - flipped y
+		glColor3f( 1, 1, 0 );
+		glVertex3f(-r,  r, -r); // 1
+		glVertex3f(-r,  r,  r); // 2
+		glVertex3f( r,  r,  r); // 3
+		glVertex3f( r,  r, -r); // 4
+
+		// y (z coords shifted left)
+		glColor3f( 0, 1, 1 );
+		glVertex3f(-r, -r, -r); // 1
+		glVertex3f(-r, -r,  r); // 4
+		glVertex3f(-r,  r,  r); // 3
+		glVertex3f(-r,  r, -r); // 2
+
+		// y - flipped x
+		glColor3f( 1, 0, 1 );
+		glVertex3f( r, -r, -r); // 1
+		glVertex3f( r,  r, -r); // 2
+		glVertex3f( r,  r,  r); // 3
+		glVertex3f( r, -r,  r); // 4
+
+		glEnd();
+	}
+	glPopMatrix();
 }
