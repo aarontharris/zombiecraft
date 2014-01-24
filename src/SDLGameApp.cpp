@@ -70,7 +70,7 @@ void SDLGameApp::run() {
 	glLoadIdentity();
 	gluPerspective(50.0f, 1.0f, 0.0f, 100.0f);
 	glMatrixMode(GL_MODELVIEW);
-	glClear( GL_COLOR_BUFFER_BIT);
+//	glClear( GL_COLOR_BUFFER_BIT );
 
 	bool running = true;
 	SDL_Event event;
@@ -100,7 +100,7 @@ void SDLGameApp::run() {
 
 		float fps = 1 / frameTime;
 		float afps = (float)frameNumber / totalTime;
-		fprintf( stdout, "FPS: %f, AFPS: %f, FrameTime: %f\n", fps, afps, frameTime);
+		fprintf( stdout, "FPS: %.2f, AFPS: %.2f, FrameTime: %.2f, Total: %.2f\n", fps, afps, frameTime, totalTime);
 
 		update(frameTime);
 		render(frameTime);
