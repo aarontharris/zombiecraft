@@ -14,6 +14,15 @@
 #include "../SDLGameApp.h"
 #include "../Vector3f.h"
 
+
+namespace CH4 {
+	const GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+	const GLfloat mat_shininess[] = { 50.0 };
+	const GLfloat light_position[] = { 1.0, 1.0, -10.0, 0.0 };
+	const GLfloat white_light[] = { 1.0, 1.0, 1.0, 0.0 };
+	const GLfloat lmodel_ambient[] = { 0.1, 0.1, 0.1, 0.0 };
+}
+
 class Ch4: public GAME_APP_ABSTRACTION_LAYER {
 
 public:

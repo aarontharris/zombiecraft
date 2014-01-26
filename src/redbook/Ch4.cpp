@@ -17,6 +17,17 @@ void Ch4::init() {
 	glFrontFace( GL_CCW ); // Default but being explicit
 	glEnable( GL_DEPTH_TEST );
 
+	glShadeModel( GL_FLAT );
+	glMaterialfv( GL_FRONT, GL_SPECULAR, CH4::mat_specular );
+	glMaterialfv( GL_FRONT, GL_SHININESS, CH4::mat_shininess );
+	glLightfv( GL_LIGHT0, GL_POSITION, CH4::white_light );
+	glLightfv( GL_LIGHT0, GL_DIFFUSE, CH4::white_light );
+	glLightfv( GL_LIGHT0, GL_SPECULAR, CH4::light_position );
+	glLightModelfv( GL_LIGHT_MODEL_AMBIENT, CH4::lmodel_ambient );
+
+	glEnable( GL_LIGHTING );
+	glEnable( GL_LIGHT0 );
+
 	camPos.x = 0;
 	camPos.y = 0;
 	camPos.z = 15; // -z extends into the monitor, +z towards the player
@@ -45,7 +56,8 @@ void Ch4::init() {
 void Ch4::update(float frameTime) {
 	potPos.y += frameTime;
 	potRot.z += frameTime * 30; // 30 degrees per second
-	potRot.x += frameTime * 90; // 30 degrees per second
+	potRot.x += frameTime * 30; // 30 degrees per second
+	potRot.y += frameTime * 30; // 30 degrees per second
 	camRot.z += frameTime * 30;
 
 	tcamPos.x = potPos.x;
@@ -70,6 +82,8 @@ void Ch4::render(float frameTime) {
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 	}
 
+	glLightfv( GL_LIGHT0, GL_POSITION, CH4::light_position );
+
 	// the camera's matrix
 	glPushMatrix();
 	{
@@ -87,9 +101,12 @@ void Ch4::render(float frameTime) {
 
 		// Draw the world in the same root matrix to adopt camera rotation, etc
 		{
-			for ( int i = 0; i < 10000; i++ ) {
+//			for ( int i = 0; i < 10000; i++ ) {
 				drawCubes();
-			}
+//				glutSolidTeapot( 1 );
+//			}
+//			glShadeModel(GL_FLAT);
+//			glutWireCube(1);
 		}
 	}
 	glPopMatrix();
@@ -108,8 +125,28 @@ void Ch4::drawCubes() {
 		float r = 0.5f;
 		glBegin( GL_QUADS);
 
+		glNormal3f(  0,  0, -1 );
+		glVertex3f( -r, -r, -r );
+		glVertex3f(  r, -r, -r );
+		glVertex3f(  r,  r, -r );
+		glVertex3f( -r,  r, -r );
+
+		glNormal3f(  1,  0,  0 );
+		glVertex3f(  r, -r, -r );
+		glVertex3f(  r, -r,  r );
+		glVertex3f(  r,  r,  r );
+		glVertex3f(  r,  r, -r );
+
+		glNormal3f(  0,  0,  1 );
+		glVertex3f(  r, -r,  r );
+		glVertex3f( -r, -r,  r );
+		glVertex3f( -r,  r,  r );
+		glVertex3f(  r,  r,  r );
+
+		/*
 		// x
 		glColor3f(1, 0, 0);
+		glNormal3f( 0, 0,  1 );
 		glVertex3f(-r, -r, -r); // 1
 		glVertex3f(-r,  r, -r); // 4
 		glVertex3f( r,  r, -r); // 3
@@ -117,6 +154,7 @@ void Ch4::drawCubes() {
 
 		// x - flipped z
 		glColor3f(0, 0, 1);
+		glNormal3f( 0, 0, -1 );
 		glVertex3f(-r, -r,  r); // 1 !z
 		glVertex3f( r, -r,  r); // 2 !z
 		glVertex3f( r,  r,  r); // 3 !z
@@ -149,6 +187,7 @@ void Ch4::drawCubes() {
 		glVertex3f( r,  r, -r); // 2
 		glVertex3f( r,  r,  r); // 3
 		glVertex3f( r, -r,  r); // 4
+		*/
 
 		glEnd();
 	}

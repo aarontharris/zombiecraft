@@ -7,9 +7,64 @@
 
 #include "Ch2.h"
 
+#define blitArray(size,src,dst) for(int i=0; i<size;i++){dst[i]=src[i];}
+
 // GAME_APP is a #define that points to the impl for SDL,GLFW, etc
 Ch2::Ch2(const char* windowTitle, int screenWidth, int screenHeight) :
 		GAME_APP_ABSTRACTION_LAYER(windowTitle, screenWidth, screenHeight) {
+	wCubes = 10;
+	hCubes = 10;
+	dCubes = 10;
+	cubeSize = .5;
+	cubeOrigin.x = 0;
+	cubeOrigin.y = 0;
+	cubeOrigin.z = 0;
+
+	r = 1.0f;
+
+	GLfloat _cubeVerts[72] = {
+			-r, -r, -r,
+			 r, -r, -r,
+			 r,  r, -r,
+			-r,  r, -r,
+
+			-2*r, -r, -r,
+			 2*r, -r, -r,
+			 2*r,  r, -r,
+			-2*r,  r, -r,
+
+			-3*r, -r, -r,
+			 3*r, -r, -r,
+			 3*r,  r, -r,
+			-3*r,  r, -r,
+
+			-4*r, -r, -r,
+			 4*r, -r, -r,
+			 4*r,  r, -r,
+			-4*r,  r, -r,
+
+			-5*r, -r, -r,
+			 5*r, -r, -r,
+			 5*r,  r, -r,
+			-5*r,  r, -r,
+
+			-6*r, -r, -r,
+			 6*r, -r, -r,
+			 6*r,  r, -r,
+			-6*r,  r, -r,
+	};
+	blitArray( 72, _cubeVerts, cubeVerts );
+
+	GLuint _cubeIndices[24] = {
+			 0, 1, 2, 3,
+			 4, 5, 6, 7,
+			 8, 9,10,11,
+			12,13,14,15,
+			16,17,18,19,
+			20,21,22,23
+	};
+	blitArray( 24, _cubeIndices, cubeIndices );
+
 }
 
 void Ch2::init() {
@@ -41,88 +96,13 @@ void Ch2::init() {
 	potRot.y = 0;
 	potRot.z = 0;
 
-	glGenBuffers( bufferCount, buffers);
-	glBindBuffer( GL_ARRAY_BUFFER, buffers[cubeVertBufferIdx]);
+	glGenBuffers( CH2_bufferCount, buffers);
+	glBindBuffer( GL_ARRAY_BUFFER, buffers[CH2_cubeVertBufferIdx]);
 	glBufferData( GL_ARRAY_BUFFER, sizeof(cubeVerts), cubeVerts, GL_STATIC_DRAW); // TODO consider GL_DYNAMIC_DRAW for editability?
 	glVertexPointer(3, GL_FLOAT, 0, (void *) (0));
 	glEnableClientState( GL_VERTEX_ARRAY);
-	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, buffers[cubeIndicesBufferIdx]);
+	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, buffers[CH2_cubeIndicesBufferIdx]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cubeIndices), cubeIndices, GL_STATIC_DRAW);
-//
-//	int sizeX = 2;
-//	int sizeY = 2;
-//	int numCubes = sizeX * sizeY;
-//	int numDatasPerVertex = 3;
-//	int numVertsPerCube = 4;
-//	int numDatasPerCube = numDatasPerVertex * numVertsPerCube;
-//	int numVerts = numCubes * numVertsPerCube;
-//	numDatas = numVerts * 3;
-//	GLfloat oX = 0.0f;
-//	GLfloat oY = 0.0f;
-//	GLfloat oZ = 0.0f;
-//
-//	cubeIndices2 = new GLuint[numVerts];
-//	for (int i = 0; i < numVerts; i++) {
-//		cubeIndices2[i] = i;
-//	}
-//
-//	cubeVerts2 = new GLfloat[numVerts * 3];
-//
-//	int cubeIdx = 0;
-//	for (int x = 0; x < sizeX; x++) {
-//		for (int y = 0; y < sizeY; y++) {
-//			int z = 0;
-//
-//			int pos = y * sizeX + x;
-//
-//			cubeVerts2[pos + 0] = -r + x + oX;
-//			cubeVerts2[pos + 1] = -r + y + oY;
-//			cubeVerts2[pos + 2] = -r + z + oZ;
-//			cubeVerts2[pos + 3] = r + x + oX;
-//			cubeVerts2[pos + 4] = -r + y + oY;
-//			cubeVerts2[pos + 5] = -r + z + oZ;
-//			cubeVerts2[pos + 6] = r + x + oX;
-//			cubeVerts2[pos + 7] = r + y + oY;
-//			cubeVerts2[pos + 8] = -r + z + oZ;
-//			cubeVerts2[pos + 9] = -r + x + oX;
-//			cubeVerts2[pos + 10] = r + y + oY;
-//			cubeVerts2[pos + 11] = -r + z + oZ;
-//
-//			cubeIdx += numDatasPerCube;
-//		}
-//	}
-//
-//	int pos = 0;
-//	int x = 0;
-//	int y = 0;
-//	int z = 0;
-//	cubeVerts2 = new GLfloat[12];
-//	cubeVerts2[pos + 0] = -r + x + oX;
-//	cubeVerts2[pos + 1] = -r + y + oY;
-//	cubeVerts2[pos + 2] = -r + z + oZ;
-//	cubeVerts2[pos + 3] = r + x + oX;
-//	cubeVerts2[pos + 4] = -r + y + oY;
-//	cubeVerts2[pos + 5] = -r + z + oZ;
-//	cubeVerts2[pos + 6] = r + x + oX;
-//	cubeVerts2[pos + 7] = r + y + oY;
-//	cubeVerts2[pos + 8] = -r + z + oZ;
-//	cubeVerts2[pos + 9] = -r + x + oX;
-//	cubeVerts2[pos + 10] = r + y + oY;
-//	cubeVerts2[pos + 11] = -r + z + oZ;
-//
-//	cubeIndices2 = new GLuint[4];
-//	cubeIndices2[0] = 0;
-//	cubeIndices2[1] = 1;
-//	cubeIndices2[2] = 2;
-//	cubeIndices2[3] = 3;
-//
-//	glGenBuffers( buffer2Count, buffers2);
-//	glBindBuffer( GL_ARRAY_BUFFER, buffers2[cubeVert2BufferIdx]);
-//	glBufferData( GL_ARRAY_BUFFER, sizeof(cubeVerts2), cubeVerts2, GL_STATIC_DRAW); // TODO consider GL_DYNAMIC_DRAW for editability?
-//	glVertexPointer(3, GL_FLOAT, 0, (void *) (0));
-//	glEnableClientState( GL_VERTEX_ARRAY);
-//	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, buffers[cubeIndices2BufferIdx]);
-//	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cubeIndices2), cubeIndices2, GL_STATIC_DRAW);
 }
 
 void Ch2::update(float frameTime) {
@@ -171,7 +151,7 @@ void Ch2::render(float frameTime) {
 		{
 			drawCubes();
 //			drawCubesBetter();
-			drawTeapot();
+//			drawTeapot();
 		}
 	}
 	glPopMatrix();
