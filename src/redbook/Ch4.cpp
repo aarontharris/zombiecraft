@@ -28,24 +28,24 @@ void Ch4::init() {
 	glEnable( GL_LIGHTING );
 	glEnable( GL_LIGHT0 );
 
-	camPos.x = 0;
-	camPos.y = 0;
+	camPos.x = 10;
+	camPos.y = 10;
 	camPos.z = 15; // -z extends into the monitor, +z towards the player
 
 	camRot.x = 0;
 	camRot.y = 0;
-	camRot.z = 45;
+	camRot.z = 0;
 
-	tcamPos.x = 0;
-	tcamPos.y = 0;
-	tcamPos.z = 0;
+	tcamPos.x = -10;
+	tcamPos.y = -10;
+	tcamPos.z = -15;
 
 	ncamPos.x = 0;
 	ncamPos.y = 1;
 	ncamPos.z = 0;
 
 	potPos.x = 0;
-	potPos.y = -5;
+	potPos.y = 0;
 	potPos.z = 0;
 
 	potRot.x = 0;
@@ -54,15 +54,17 @@ void Ch4::init() {
 }
 
 void Ch4::update(float frameTime) {
-	potPos.y += frameTime;
-	potRot.z += frameTime * 30; // 30 degrees per second
-	potRot.x += frameTime * 30; // 30 degrees per second
-	potRot.y += frameTime * 30; // 30 degrees per second
-	camRot.z += frameTime * 30;
+//	potPos.y += frameTime;
+//	potRot.z += frameTime * 30; // 30 degrees per second
+//	potRot.x += frameTime * 30; // 30 degrees per second
+	potRot.y -= frameTime * 30; // 30 degrees per second
+//	camRot.z += frameTime * 30;
 
-	tcamPos.x = potPos.x;
-	tcamPos.y = potPos.y;
-	tcamPos.z = potPos.z;
+	potPos.x += frameTime * -0.2;
+
+//	tcamPos.x = potPos.x;
+//	tcamPos.y = potPos.y;
+//	tcamPos.z = potPos.z;
 }
 
 void Ch4::render(float frameTime) {
@@ -100,16 +102,48 @@ void Ch4::render(float frameTime) {
 				);
 
 		// Draw the world in the same root matrix to adopt camera rotation, etc
-		{
-//			for ( int i = 0; i < 10000; i++ ) {
-				drawCubes();
-//				glutSolidTeapot( 1 );
-//			}
-//			glShadeModel(GL_FLAT);
-//			glutWireCube(1);
-		}
+		drawScene( frameTime );
 	}
 	glPopMatrix();
+}
+
+void Ch4::drawScene( float frameTime ) {
+	drawRef();
+	drawCubes();
+	//			glutSolidSphere( 1, 32, 32 );
+	//			glutSolidCube( 2 );
+}
+
+void Ch4::drawRef() {
+	bool wasEnabled = glIsEnabled( GL_LIGHTING );
+	if ( wasEnabled ) {
+		glDisable( GL_LIGHTING );
+	}
+
+	glLineWidth( 5.0f );
+	glBegin( GL_LINES );
+
+		// X
+		glColor3f( 1,0,0 );
+		glVertex3f( 0, 0, 0 );
+		glVertex3f( 1, 0, 0 );
+
+		// Y
+		glColor3f( 0,1,0 );
+		glVertex3f( 0, 0, 0 );
+		glVertex3f( 0, 1, 0 );
+
+		// z
+		glColor3f( 0,0,1 );
+		glVertex3f( 0, 0, 0 );
+		glVertex3f( 0, 0, 1 );
+
+	glEnd();
+	glLineWidth( 1.0f );
+
+	if ( wasEnabled ) {
+		glEnable( GL_LIGHTING );
+	}
 }
 
 void Ch4::drawCubes() {
@@ -118,78 +152,24 @@ void Ch4::drawCubes() {
 
 	glPushMatrix();
 	{
+
 		glTranslatef( potPos.x, potPos.y, potPos.z );
 		glRotatef( potRot.x, 1, 0, 0 );
 		glRotatef( potRot.y, 0, 1, 0 );
 		glRotatef( potRot.z, 0, 0, 1 );
 		float r = 0.5f;
-		glBegin( GL_QUADS);
 
-		glNormal3f(  0,  0, -1 );
-		glVertex3f( -r, -r, -r );
-		glVertex3f(  r, -r, -r );
-		glVertex3f(  r,  r, -r );
-		glVertex3f( -r,  r, -r );
-
-		glNormal3f(  1,  0,  0 );
-		glVertex3f(  r, -r, -r );
-		glVertex3f(  r, -r,  r );
-		glVertex3f(  r,  r,  r );
-		glVertex3f(  r,  r, -r );
-
-		glNormal3f(  0,  0,  1 );
-		glVertex3f(  r, -r,  r );
-		glVertex3f( -r, -r,  r );
-		glVertex3f( -r,  r,  r );
-		glVertex3f(  r,  r,  r );
-
-		/*
-		// x
-		glColor3f(1, 0, 0);
-		glNormal3f( 0, 0,  1 );
-		glVertex3f(-r, -r, -r); // 1
-		glVertex3f(-r,  r, -r); // 4
-		glVertex3f( r,  r, -r); // 3
-		glVertex3f( r, -r, -r); // 2
-
-		// x - flipped z
-		glColor3f(0, 0, 1);
-		glNormal3f( 0, 0, -1 );
-		glVertex3f(-r, -r,  r); // 1 !z
-		glVertex3f( r, -r,  r); // 2 !z
-		glVertex3f( r,  r,  r); // 3 !z
-		glVertex3f(-r,  r,  r); // 4 !z
-
-		// z (x coords shifted left)
-		glColor3f( 0, 1, 0 );
-		glVertex3f(-r, -r, -r); // 1
-		glVertex3f( r, -r, -r); // 4
-		glVertex3f( r, -r,  r); // 3
-		glVertex3f(-r, -r,  r); // 2
-
-		// z - flipped y
-		glColor3f( 1, 1, 0 );
-		glVertex3f(-r,  r, -r); // 1
-		glVertex3f(-r,  r,  r); // 2
-		glVertex3f( r,  r,  r); // 3
-		glVertex3f( r,  r, -r); // 4
-
-		// y (z coords shifted left)
-		glColor3f( 0, 1, 1 );
-		glVertex3f(-r, -r, -r); // 1
-		glVertex3f(-r, -r,  r); // 4
-		glVertex3f(-r,  r,  r); // 3
-		glVertex3f(-r,  r, -r); // 2
-
-		// y - flipped x
-		glColor3f( 1, 0, 1 );
-		glVertex3f( r, -r, -r); // 1
-		glVertex3f( r,  r, -r); // 2
-		glVertex3f( r,  r,  r); // 3
-		glVertex3f( r, -r,  r); // 4
-		*/
-
-		glEnd();
+		GLUtl::solidCube( 2* r);
 	}
 	glPopMatrix();
+
+	glDisable( GL_LIGHTING );
+	glPushMatrix();
+		glTranslatef( potPos.x, potPos.y, potPos.z );
+		glRotatef( potRot.x, 1, 0, 0 );
+		glRotatef( potRot.y, 0, 1, 0 );
+		glRotatef( potRot.z, 0, 0, 1 );
+		glutWireCube( 1 );
+	glPopMatrix();
+	glEnable( GL_LIGHTING );
 }

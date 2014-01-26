@@ -18,12 +18,15 @@ float GameApp::getTime() {
 	return -1.0f;
 }
 
+/** Should get called immediately before run's gameloop */
 void GameApp::init() {
 }
 
+/** Should get called from run's gameloop */
 void GameApp::update(float frameTime) {
 }
 
+/** Should get called from run's gameLoop after update */
 void GameApp::render(float frameTime) {
 }
 

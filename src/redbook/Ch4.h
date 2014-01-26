@@ -11,14 +11,12 @@
 /* Define which abstraction layer to use here */
 #define GAME_APP_ABSTRACTION_LAYER SDLGameApp // The name of the GameApp derived class to use
 
-#include "../SDLGameApp.h"
-#include "../Vector3f.h"
-
+#include "../ath/GLUtl.h"
 
 namespace CH4 {
 	const GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
 	const GLfloat mat_shininess[] = { 50.0 };
-	const GLfloat light_position[] = { 1.0, 1.0, -10.0, 0.0 };
+	const GLfloat light_position[] = {  10.0,  0.0, 15.0, 0.0 };
 	const GLfloat white_light[] = { 1.0, 1.0, 1.0, 0.0 };
 	const GLfloat lmodel_ambient[] = { 0.1, 0.1, 0.1, 0.0 };
 }
@@ -32,8 +30,10 @@ private:
 	virtual void init();
 	virtual void update(float frameTime);
 	virtual void render(float frameTime);
+	virtual void drawScene(float frameTime);
 
 	void drawCubes();
+	void drawRef();
 
 	Vector3f camPos; // camera position
 	Vector3f camRot; // camera normal

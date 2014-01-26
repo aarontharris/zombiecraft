@@ -10,9 +10,7 @@
 
 #include "GameApp.h"
 
-#include <SDL.h>
-#include <glut.h>
-#include <gl3ext.h>
+#include "GLUtl.h" // Platform agnostic GL Utils
 
 class SDLGameApp : public GameApp {
 

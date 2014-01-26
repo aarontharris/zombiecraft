@@ -6,7 +6,6 @@
  */
 
 #include "ZGame.h"
-#include "Vector3f.h"
 
 void drawTeapot();
 void drawCubes();

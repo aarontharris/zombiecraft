@@ -8,6 +8,7 @@
 #ifndef GAMEAPP_H_
 #define GAMEAPP_H_
 
+/* Abstract -- see SDLGameApp or GLFWGameApp */
 class GameApp {
 private:
 	int screenWidth;
