@@ -1,4 +1,4 @@
 zombiecraft
 ===========
 
-Zombie Survival Crafting Game
+Attempts to revive my aging knowledge of OpenGL...  Walking through the infamous Redbook... again...
